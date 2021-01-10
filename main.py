@@ -3,6 +3,21 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
+from user import User
+
+
+u1 = User("naorfarjun@gmail.com", "1234567890")
+u2 = User("naorfarjun", "naor2002")
+users = []
+users.append(u1)
+users.append(u2)
+
+
+def login_func(users, email, password):
+    for user in users:
+        if email == user.getEmail() and password == user.getPassword():
+            return True, user
+    return False, None
 
 
 class Login(QDialog):
@@ -16,7 +31,14 @@ class Login(QDialog):
     def login_func(self):
         email = self.email.text()
         password = self.password.text()
-        print("\nSuccessfully Logged in \nEmail: %s\nPassword: %s" % (email, password))
+        login_status, user = login_func(users, self.email.text(), self.password.text())
+        if login_status == True:
+            print(
+                "\nSuccessfully Logged in \nEmail: %s\nPassword: %s" % (email, password)
+            )
+            main_page = MainPage(user)
+            widget.addWidget(main_page)
+            widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def go_to_create(self):
         create_accoount = CreateAcount()
@@ -43,6 +65,24 @@ class CreateAcount(QDialog):
             login = Login()
             widget.addWidget(login)
             widget.setCurrentIndex(widget.currentIndex() + 1)
+            new_user = User(self.email.text(), self.password.text())
+            users.append(new_user)
+
+
+class MainPage(QDialog):
+    def __init__(self, user):
+        super(MainPage, self).__init__()
+        loadUi("main.ui", self)
+        self.email.setText(user.getEmail())
+        self.password.setText(user.getPassword())
+        self.createdate.setText(user.getDate())
+        self.logoutbutton.clicked.connect(self.logout_func)
+
+    def logout_func(self):
+        print("Logout of the system")
+        login = Login()
+        widget.addWidget(login)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
 app = QApplication(sys.argv)
