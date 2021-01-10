@@ -1,48 +1,55 @@
-from user import User
+import sys
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QDialog
+from PyQt5.uic import loadUi
 
 
-def main():
-    users = {"momo": "111"}
+class Login(QDialog):
+    def __init__(self):
+        super(Login, self).__init__()
+        loadUi("login.ui", self)
+        self.loginbutton.clicked.connect(self.login_func)
+        self.password.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.createaccountbutton.clicked.connect(self.go_to_create)
 
-    users, register_status = register(users)
-    if register_status == 1:
-        print("New user added")
-    else:
-        print("Can't add new user")
-    login_satus = login(users)
-    print(login_satus)
-    # for i in users.keys():
-    # print("\nUsername: " + i + "\nPassword: " + users[i])
+    def login_func(self):
+        email = self.email.text()
+        password = self.password.text()
+        print("\nSuccessfully Logged in \nEmail: %s\nPassword: %s" % (email, password))
 
-
-def register(users):
-    print("\nREGIISTER")
-    username = str(input("Enter username: "))
-    password1 = str(input("Enter password: "))
-    password2 = str(input("Enter password again: "))
-    if username in users.keys():
-        print("Username already in use")
-        return users, 0
-    if password1 != password2:
-        print("The passwords do not match")
-        return users, 0
-    for key in users.keys():
-        if password1 == users[key]:
-            print("The password is already in use")
-            return users, 0
-    users[username] = password1
-    return users, 1
+    def go_to_create(self):
+        create_accoount = CreateAcount()
+        widget.addWidget(create_accoount)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
-def login(users):
-    print("\nLOGIN")
-    username = str(input("Enter username: "))
-    password = str(input("Enter password: "))
-    for key in users.keys():
-        if username == key:
-            if password == users[key]:
-                return "Login successfully"
-    return "One or more of the data entered is incorrect"
+class CreateAcount(QDialog):
+    def __init__(self):
+        super(CreateAcount, self).__init__()
+        loadUi("createaccount.ui", self)
+        self.singupbutton.clicked.connect(self.create_account_func)
+        self.password.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.confirmpass.setEchoMode(QtWidgets.QLineEdit.Password)
+
+    def create_account_func(self):
+        email = self.email.text()
+        if self.password.text() == self.confirmpass.text():
+            password = self.password.text()
+            print(
+                "\nSuccessfully Created account \nEmail: %s\nPassword: %s"
+                % (email, password)
+            )
+            login = Login()
+            widget.addWidget(login)
+            widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
-main()
+app = QApplication(sys.argv)
+login_window = Login()
+widget = QtWidgets.QStackedWidget()
+widget.addWidget(login_window)
+widget.setFixedWidth(450)
+widget.setFixedHeight(500)
+widget.show()
+app.exec_()
