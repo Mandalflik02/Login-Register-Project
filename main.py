@@ -23,7 +23,7 @@ def login_func(users, email, password):
 class Login(QDialog):
     def __init__(self):
         super(Login, self).__init__()
-        loadUi("login.ui", self)
+        loadUi("UI\login.ui", self)
         self.loginbutton.clicked.connect(self.login_func)
         self.password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.createaccountbutton.clicked.connect(self.go_to_create)
@@ -49,7 +49,7 @@ class Login(QDialog):
 class CreateAcount(QDialog):
     def __init__(self):
         super(CreateAcount, self).__init__()
-        loadUi("createaccount.ui", self)
+        loadUi("UI\createaccount.ui", self)
         self.singupbutton.clicked.connect(self.create_account_func)
         self.password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.confirmpass.setEchoMode(QtWidgets.QLineEdit.Password)
@@ -72,7 +72,7 @@ class CreateAcount(QDialog):
 class MainPage(QDialog):
     def __init__(self, user):
         super(MainPage, self).__init__()
-        loadUi("main.ui", self)
+        loadUi("UI\main.ui", self)
         self.email.setText(user.getEmail())
         self.password.setText(user.getPassword())
         self.createdate.setText(user.getDate())
