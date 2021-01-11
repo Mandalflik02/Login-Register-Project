@@ -36,7 +36,7 @@ font-size:28px;</string>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>20</x>
      <y>130</y>
      <width>51</width>
      <height>31</height>
@@ -71,8 +71,8 @@ background-color: rgb(117, 117, 117);</string>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>28</x>
-     <y>201</y>
+     <x>20</x>
+     <y>251</y>
      <width>81</width>
      <height>31</height>
     </rect>
@@ -89,7 +89,7 @@ color: rgb(255, 170, 0);</string>
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>200</y>
+     <y>250</y>
      <width>220</width>
      <height>33</height>
     </rect>
@@ -127,7 +127,7 @@ background-color: rgb(255, 204, 0);</string>
    <property name="geometry">
     <rect>
      <x>18</x>
-     <y>271</y>
+     <y>311</y>
      <width>111</width>
      <height>31</height>
     </rect>
@@ -144,7 +144,7 @@ color: rgb(255, 170, 0);</string>
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>270</y>
+     <y>310</y>
      <width>220</width>
      <height>33</height>
     </rect>
@@ -156,6 +156,44 @@ color: rgb(255, 255, 255);
 border:2px solid rgb(26, 26, 26);
 border-radius:15px;
 font-size:15px;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>18</x>
+     <y>191</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size:19px;
+color: rgb(255, 170, 0);</string>
+   </property>
+   <property name="text">
+    <string>Username</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="username">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>190</y>
+     <width>220</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">padding:5px;
+background-color: rgb(117, 117, 117);
+color: rgb(255, 255, 255);
+border:2px solid rgb(26, 26, 26);
+border-radius:15px;
+font-size:15px;</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>
