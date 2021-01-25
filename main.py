@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QDialog, QDesktopWidget, QWidget
+from PyQt5.QtWidgets import QApplication, QDialog, QDesktopWidget, QWidget, QMessageBox
 from PyQt5.uic import loadUi
 from user import User
 
@@ -19,18 +19,16 @@ DISCONNECT_MASSAGE = "!DISCONNECT!".encode(FORMAT)
 AKS_FOR_NICKNAME = "NICK"
 
 
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(ADDR)
-
-
-u1 = User("naorfarjun@gmail.com", "naorfarjun", "1234567890")
+u1 = User("n1", "naorfarjun", "11")
 u2 = User("1", "1", "1")
 users = []
 users.append(u1)
 users.append(u2)
 
+messages = []
 
-def login_func(users, email, password):
+
+def login_func(email, password):
     for user in users:
         if email == user.getEmail() and password == user.getPassword():
             return True, user
@@ -49,7 +47,7 @@ class Login(QDialog):
     def login_func(self):
         email = self.email.text()
         password = self.password.text()
-        login_status, user = login_func(users, self.email.text(), self.password.text())
+        login_status, user = login_func(self.email.text(), self.password.text())
         if login_status == True:
             print(
                 "\nSuccessfully Logged in \nEmail: %s\nPassword: %s" % (email, password)
@@ -57,6 +55,8 @@ class Login(QDialog):
             main_page = MainPage(user)
             widget.addWidget(main_page)
             widget.setCurrentIndex(widget.currentIndex() + 1)
+        else:
+            print("Cen't connect to the server")
 
     def go_to_create(self):
         create_accoount = CreateAcount()
@@ -69,8 +69,8 @@ class CreateAcount(QDialog):
         super(CreateAcount, self).__init__()
         loadUi("UI\createaccount.ui", self)
 
-        # widget.setFixedWidth(450)
-        # widget.setFixedHeight(500)
+        widget.setFixedWidth(450)
+        widget.setFixedHeight(500)
 
         # center the window
         self.to_the_center()
@@ -105,7 +105,7 @@ class CreateAcount(QDialog):
         widget.move(qr1.topLeft())
 
 
-messages = []
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 
 class MainPage(QDialog):
@@ -121,9 +121,11 @@ class MainPage(QDialog):
                     if msg_id != messages[-1]:
                         self.chattextedit.append(f"{message}")
                         messages.append(msg_id)
+                if self.killTrhead == True:
+                    break
             except:
                 print("An error...")
-                client.close()
+                client.close()  # shutdown(socket.SHUT_RDWR)
                 break
 
     def __init__(self, user):
@@ -131,11 +133,12 @@ class MainPage(QDialog):
         loadUi("UI\main.ui", self)
 
         # set the window size
-        # widget.setFixedWidth(1200)
-        # widget.setFixedHeight(600)
+        widget.setFixedWidth(1200)
+        widget.setFixedHeight(600)
 
         self.to_the_center()
         self.user = user
+        client.connect(ADDR)
         self.detalisframe.setHidden(True)
         self.accountdetalisbutton.clicked.connect(self.show_detalis_func)
         self.accountdetalisbutton.setToolTip("Account Detalis")
@@ -145,23 +148,28 @@ class MainPage(QDialog):
         self.password.setText(user.getPassword())
         self.createdate.setText(user.getDate())
         self.logoutbutton.clicked.connect(self.logout_func)
-        self.sendbutton.clicked.connect(self.send_message)
-        get_thred = threading.Thread(target=self.get_message)
-        get_thred.start()
+        self.textsend.returnPressed.connect(self.send_message)
+
+        self.killTrhead = False
+        self.get_thred = threading.Thread(target=self.get_message)
+        self.get_thred.start()
 
     def send_message(self):
-        message = "%s: %s" % (self.user.getUsername(), self.textsend.toPlainText())
+        message = "%s: %s" % (self.user.getUsername(), self.textsend.text())
         client.send(message.encode(FORMAT))
+        self.textsend.setText("")
 
     def logout_func(self):
         print("Logout of the system")
         client.send(DISCONNECT_MASSAGE)
+        client.close()
         login = Login()
         widget.addWidget(login)
         widget.setCurrentIndex(widget.currentIndex() + 1)
-        # widget.setFixedWidth(450)
-        # widget.setFixedHeight(500)
+        widget.setFixedWidth(450)
+        widget.setFixedHeight(500)
         self.to_the_center()
+        self.killTrhead = True
 
     def show_detalis_func(self):
         self.detalisframe.setHidden(not self.detalisframe.isHidden())
@@ -178,7 +186,8 @@ app = QApplication(sys.argv)
 login_window = Login()
 widget = QtWidgets.QStackedWidget()
 widget.addWidget(login_window)
-# widget.setFixedWidth(450)
-# widget.setFixedHeight(500)
+widget.setFixedWidth(450)
+widget.setFixedHeight(500)
 widget.show()
 app.exec_()
+client.close()

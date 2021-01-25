@@ -14,7 +14,8 @@
    <string>Main Page</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(54, 54, 54);</string>
+   <string notr="true">background-color: rgb(54, 54, 54);
+font: 8pt &quot;Calibri&quot;;</string>
   </property>
   <widget class="QPushButton" name="accountdetalisbutton">
    <property name="geometry">
@@ -42,60 +43,29 @@ padding: 5px;</string>
   <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>30</y>
-     <width>711</width>
-     <height>531</height>
+     <x>10</x>
+     <y>10</y>
+     <width>761</width>
+     <height>581</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(0, 0, 0);</string>
    </property>
-   <widget class="QTextEdit" name="textsend">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>490</y>
-      <width>341</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(0, 0, 0);
-font-size:15px;
-color:rgb(255,255,255);</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="sendbutton">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>490</y>
-      <width>71</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(0, 0, 0);
-font-size:15px;</string>
-    </property>
-    <property name="text">
-     <string>SEND</string>
-    </property>
-   </widget>
    <widget class="QTextEdit" name="chattextedit">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>40</y>
-      <width>600</width>
-      <height>400</height>
+      <x>-1</x>
+      <y>29</y>
+      <width>761</width>
+      <height>481</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(255, 255, 255);</string>
+color: rgb(255, 255, 255);
+border:none;
+font-size:18px;</string>
     </property>
     <property name="acceptRichText">
      <bool>true</bool>
@@ -107,19 +77,37 @@ color: rgb(255, 255, 255);</string>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>10</x>
       <y>10</y>
-      <width>231</width>
-      <height>16</height>
+      <width>241</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(0, 0, 0);
-font: 8pt &quot;Calibri&quot;;
+     <string notr="true">color: rgb(255, 255, 255);
 font-size:18px;</string>
     </property>
     <property name="text">
-     <string>Welcome To Mandalflik's Chat</string>
+     <string>Welcome  To  Mandalflik's  Chat</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="textsend">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>540</y>
+      <width>681</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(0, 0, 0);
+font-size:15px;
+color:rgb(255,255,255);
+border:1px solid rgb(255,255,255);
+border-radius:15px;
+padding:5px;
+</string>
     </property>
    </widget>
   </widget>
@@ -268,15 +256,15 @@ font-size:19px;
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>30</y>
-      <width>141</width>
+      <width>121</width>
       <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
-font-size:20px;</string>
+font-size:17px;</string>
     </property>
     <property name="text">
      <string>Acount Detalis: </string>
@@ -285,7 +273,7 @@ font-size:20px;</string>
    <widget class="QLabel" name="username">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>150</x>
       <y>30</y>
       <width>161</width>
       <height>31</height>

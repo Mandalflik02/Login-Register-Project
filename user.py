@@ -8,6 +8,7 @@ class User:
 
     def getEmail(self):
         return self.email
+
     def getUsername(self):
         return self.username
 
@@ -17,8 +18,8 @@ class User:
     def getDate(self):
         return self.create_date
 
-    def __init__(self, email,username,password):
+    def __init__(self, email, username, password):
         self.email = email
         self.password = password
-        self.username=username
+        self.username = username
         self.create_date = self.create_date()

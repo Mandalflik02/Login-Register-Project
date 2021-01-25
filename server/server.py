@@ -1,6 +1,6 @@
 import socket
 import threading
-
+import time
 import re
 import string
 
@@ -29,15 +29,24 @@ class DISCINNECT(Exception):
 
 def broadcast(message):
     message = message.encode(FORMAT)
-    for client in clients:
-        client.send(message)
+    if len(clients) > 0:
+        for client in clients:
+            client.send(message)
 
 
 def hendla_client(client, addr):
     while True:
         try:
+            if len(clients) < 1:
+                index = clients.index(client)
+                nickname = nicknames[index]
+                raise DISCINNECT(nickname)
             message = client.recv(HEADER).decode(FORMAT)
             broadcast(message)
+            if not message:
+                index = clients.index(client)
+                nickname = nicknames[index]
+                raise DISCINNECT(nickname)
             if message == DISCONNECT_MASSAGE:
                 index = clients.index(client)
                 nickname = nicknames[index]
@@ -49,6 +58,15 @@ def hendla_client(client, addr):
             nickname = nicknames[index]
             broadcast(f"{nickname} left the chat")
             print(e.__str__())
+            nicknames.remove(nickname)
+            break
+        except:
+            index = clients.index(client)
+            clients.remove(client)
+            client.close()
+            nickname = nicknames[index]
+            broadcast(f"{nickname} left the chat")
+            print(f"{nickname} left the chat")
             nicknames.remove(nickname)
             break
 
@@ -69,6 +87,7 @@ def start():
 
         thread = threading.Thread(target=hendla_client, args=(client, addr))
         thread.start()
+
         print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
 
 
